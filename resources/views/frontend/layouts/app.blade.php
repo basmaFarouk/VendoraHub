@@ -19,6 +19,8 @@
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('assets/frontend/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/global/upload-preview/upload-preview.css') }}" />
+    @stack('styles')
 </head>
 
 <body>
@@ -169,6 +171,8 @@
     <!-- Template  JS -->
     <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/shop.js') }}"></script>
+    <script src="{{ asset('assets/global/upload-preview/jquery.uploadPreview.min.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>
