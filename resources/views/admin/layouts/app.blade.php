@@ -18,12 +18,14 @@
     <!-- END PAGE LEVEL STYLES -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="./dist/css/tabler.css?1750026893" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/global/upload-preview/upload-preview.css') }}" />
     <link href="{{ asset('assets/admin/css/tabler.css') }}" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN CUSTOM FONT -->
     <style>
       @import url("https://rsms.me/inter/inter.css");
     </style>
+    @stack('styles')
     <!-- END CUSTOM FONT -->
   </head>
   <body>
@@ -67,7 +69,9 @@
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/global/upload-preview/jquery.uploadPreview.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/tabler.min.js?1750026893') }}" defer></script>
+    @stack('scripts')
 
     <!-- END GLOBAL MANDATORY SCRIPTS -->
   </body>

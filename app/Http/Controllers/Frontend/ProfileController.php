@@ -23,10 +23,12 @@ class ProfileController extends Controller
             'avatar' => ['nullable', 'image','max:2048'],
         ]);
 
-        $filePath = $this->uploadFile($request->file('avatar'));
 
         $user = auth('web')->user();
-        $filePath ? $user->avatar = $filePath : null;
+        if ($request->hasFile('avatar')) {
+            $filePath = $this->uploadFile($request->file('avatar'));
+            $filePath ? $user->avatar = $filePath : null;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
