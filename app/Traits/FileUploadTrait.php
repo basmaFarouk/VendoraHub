@@ -26,4 +26,15 @@ trait FileUploadTrait {
         $filePath = $path . '/' . $fileName;
         return $filePath;
     }
+
+
+        public function uploadPrivateFile(?UploadedFile $file,$oldPath = null, $path = 'uploads') {
+
+        if(!$file->isValid()) {
+            return null;
+        }
+        $fileName = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs($path, $fileName, 'local');
+        return $path;
+    }
 }
