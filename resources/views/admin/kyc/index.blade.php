@@ -50,6 +50,10 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="card-footer">
+                    {{ $kycRequest->links }}
+                  </div>
             </div>
         </div>
     </div>
