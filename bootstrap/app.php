@@ -3,6 +3,7 @@
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckKycStatus;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\Role;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest' => RedirectIfAuthenticated::class,
             'auth' => Authenticate::class,
             'kyc_verified' => CheckKycStatus::class,
+            'role' => Role::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
