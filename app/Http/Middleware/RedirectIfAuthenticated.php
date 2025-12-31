@@ -49,13 +49,13 @@ class RedirectIfAuthenticated
     /**
      * Get the default URI the user should be redirected to when they are authenticated.
      */
-    protected function defaultRedirectUri($guard): string
+    protected function defaultRedirectUri(string|null $guard): string
     {
         if($guard == 'admin') {
             return route('admin.dashboard');
         }
 
-        if($guard == 'web') {
+        if($guard == 'web' || $guard == null) {
             return route('dashboard');
         }
 
