@@ -28,4 +28,8 @@ class Kyc extends Model
     protected $casts = [
         'status' => KycStatus::class,
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
