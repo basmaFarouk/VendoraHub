@@ -23,6 +23,7 @@ class Kyc extends Model
         'gender',
         'full_address',
         'document_type',
+        'status',
     ];
 
     protected $casts = [

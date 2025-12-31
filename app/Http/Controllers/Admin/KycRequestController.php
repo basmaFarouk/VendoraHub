@@ -6,6 +6,7 @@ use App\Models\Kyc;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
+use App\Services\AlertService;
 use Illuminate\Support\Facades\Storage;
 
 class KycRequestController extends Controller
@@ -21,5 +22,15 @@ class KycRequestController extends Controller
 
     public function download(Kyc $Kyc_request): mixed {
         return Storage::disk('local')->download($Kyc_request->document_scan_copy);
+    }
+
+    public function update(Kyc $Kyc_request, Request $request){
+        $Kyc_request->update([
+            'status' => $request->status,
+        ]);
+
+        AlertService::updated("Kyc Status Updated Successfully");
+        return redirect(route('admin.kyc.index'));
+
     }
 }
