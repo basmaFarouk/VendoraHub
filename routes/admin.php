@@ -69,5 +69,5 @@ Route::middleware('auth:admin')
     Route::get('/kyc-requests', [KycRequestController::class, 'index'])->name('kyc.index');
     Route::get('/kyc-requests/{Kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
     Route::get('/kyc-requests/download/{Kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
-    Route::get('/kyc-requests/{Kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
+    Route::put('/kyc-requests/{Kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
 });
