@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\KycStatus;
 use App\Models\Kyc;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Services\AlertService;
+use App\Services\MailService;
 use Illuminate\Support\Facades\Storage;
 
 class KycRequestController extends Controller
@@ -28,6 +30,18 @@ class KycRequestController extends Controller
         $Kyc_request->update([
             'status' => $request->status,
         ]);
+
+        if($Kyc_request->status == KycStatus::Approved) {
+            $body = 'Congratulations Your Kyc has been approved';
+        } else {
+            $body = 'Sorry Your Kyc has been rejected';
+        }
+
+        MailService::send(
+            to: $Kyc_request->user->email,
+            subject: 'Kyc Status Updated',
+            body: $body
+        );
 
         AlertService::updated("Kyc Status Updated Successfully");
         return redirect(route('admin.kyc.index'));
