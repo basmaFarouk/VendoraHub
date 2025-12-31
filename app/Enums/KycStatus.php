@@ -12,9 +12,18 @@ enum KycStatus: string
     public function label(): string
     {
         return match($this) {
-            self::Pending => 'Pending Approval',
-            self::Approved => 'Kyc Approved',
-            self::Rejected => 'Kyc Rejected',
+            self::Pending => 'Pending',
+            self::Approved => 'Approved',
+            self::Rejected => 'Rejected',
+        };
+    }
+
+    public function color(): string
+    {
+        return match($this) {
+            self::Approved => 'success',
+            self::Rejected => 'danger',
+            self::Pending => 'warning',
         };
     }
 }
