@@ -11,7 +11,7 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <x-input-image id="image-preview" name="avatar" :image=" asset(auth('admin')->user()->avatar)" />
+                    <x-input-image image-upload-id="image-upload" name="logo" image-preview-id="image-preview" image-label-id="image-label" name="avatar" :image=" asset(auth('admin')->user()->avatar)" />
                     <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
                 </div>
                 <div class="mb-3">
