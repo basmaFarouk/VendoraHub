@@ -12,6 +12,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>Dashboard</title>
     <!-- BEGIN PAGE LEVEL STYLES -->
     {{-- <link href="./dist/libs/jsvectormap/dist/jsvectormap.css?1750026893" rel="stylesheet" /> --}}
@@ -19,6 +20,7 @@
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="./dist/css/tabler.css?1750026893" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/global/upload-preview/upload-preview.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="{{ asset('assets/admin/css/tabler.css') }}" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN CUSTOM FONT -->
@@ -72,6 +74,9 @@
     <script src="{{ asset('assets/global/upload-preview/jquery.uploadPreview.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/tabler.min.js?1750026893') }}" defer></script>
     <script src="{{ asset('assets/admin/js/tinymce/tinymce.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @include('admin.layouts.scripts')
     @stack('scripts')
 

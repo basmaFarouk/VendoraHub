@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
-use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Admin\Auth\NewPasswordController;
-use App\Http\Controllers\Admin\Auth\PasswordController;
-use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Admin\Auth\RegisteredUserController;
-use App\Http\Controllers\Admin\Auth\VerifyEmailController;
-use App\Http\Controllers\Admin\KycRequestController;
-use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\Auth\PasswordController;
+use App\Http\Controllers\Admin\Auth\NewPasswordController;
+use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
 
 Route::middleware('guest:admin')
 ->prefix('admin')
@@ -70,4 +71,7 @@ Route::middleware('auth:admin')
     Route::get('/kyc-requests/{Kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
     Route::get('/kyc-requests/download/{Kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
     Route::put('/kyc-requests/{Kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
+
+    /** Role Routes */
+    Route::resource('/roles', RoleController::class);
 });
