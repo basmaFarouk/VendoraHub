@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Admin\AdminSeeder;
 use Database\Seeders\Frontend\UserSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\Admin\PermissionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(AdminSeeder::class);
+        $this->call(PermissionSeeder::class);
         $this->call(UserSeeder::class);
     }
 }
