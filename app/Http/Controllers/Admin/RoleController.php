@@ -3,15 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\AlertService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
+    static function Middleware(): array
+    {
+        return [
+            new Middleware('permission:Role Management')
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -74,6 +83,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if ($role->name == 'Super Admin') {
+            AlertService::error('You can not update Super Admin role.');
+            return to_route('admin.roles.index');
+        }
         $request->validate([
             'role' => 'required|unique:roles,name,' . $role->id,
             'permissions' => 'array',
@@ -92,6 +105,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if ($role->name == 'Super Admin') {
+            return response()->json(['status' => 'error', 'message' => 'You can not delete Super Admin role.']);
+        }
         try {
             DB::beginTransaction();
             //remove role from users
@@ -102,7 +118,7 @@ class RoleController extends Controller
             $role->delete();
             DB::commit();
             return response()->json(['message' => 'Role deleted successfully']);
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['message' => 'Error deleting role'], 500);
         }

@@ -10,9 +10,17 @@ use App\Http\Controllers\Controller;
 use App\Services\AlertService;
 use App\Services\MailService;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class KycRequestController extends Controller
+class KycRequestController extends Controller implements HasMiddleware
 {
+    static function Middleware(): array
+    {
+        return [
+            new Middleware('permission:KYC Management')
+        ];
+    }
     public function index(Request $request): View
     {
         $kycRequests = Kyc::query()
