@@ -25,7 +25,8 @@
                         <div class="text-muted">
                             Search:
                             <div class="ms-2 d-inline-block">
-                                <input type="text" class="form-control form-control-md" name="search" value="{{ request('search') }}" placeholder="Name or Email">
+                                <input type="text" class="form-control form-control-md" name="search"
+                                    value="{{ request('search') }}" placeholder="Name or Email">
                             </div>
                         </div>
                         <div class="ms-3 text-muted">
@@ -33,9 +34,12 @@
                             <div class="ms-2 d-inline-block">
                                 <select class="form-select form-select-md" name="status">
                                     <option value="">All</option>
-                                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                    <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Approved</option>
-                                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>Rejected</option>
+                                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending
+                                    </option>
+                                    <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>
+                                        Approved</option>
+                                    <option value="rejected" {{ request('status') == 'rejected' ? 'selected' : '' }}>
+                                        Rejected</option>
                                 </select>
                             </div>
                         </div>
@@ -62,14 +66,18 @@
                                     <td>{{ $role->name }}</td>
                                     <td> <span class="badge bg-primary-lt">{{ $role->permissions_count }}</span></td>
                                     <td>
-                                        <a href="{{ route('admin.roles.edit', $role) }}">Edit</a>
-                                        <a href="{{ route('admin.roles.destroy', $role) }}" class="text-danger delete-button" data-url="{{ route('admin.roles.destroy', $role) }}">Delete</a>
+                                        @if ($role->name != 'Super Admin')
+                                            <a href="{{ route('admin.roles.edit', $role) }}">Edit</a>
+                                            <a href="{{ route('admin.roles.destroy', $role) }}"
+                                                class="text-danger delete-button"
+                                                data-url="{{ route('admin.roles.destroy', $role) }}">Delete</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
-                            <tr>
-                                <td colspan="7" class="text-center"> No Data Found</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="7" class="text-center"> No Data Found</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

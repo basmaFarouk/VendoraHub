@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\UserRoleController;
 
 Route::middleware('guest:admin')
 ->prefix('admin')
@@ -74,4 +75,5 @@ Route::middleware('auth:admin')
 
     /** Role Routes */
     Route::resource('/roles', RoleController::class);
+    Route::resource('/user-role', UserRoleController::class);
 });
