@@ -1,79 +1,90 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\KycRequestController;
-use App\Http\Controllers\Admin\Auth\PasswordController;
-use App\Http\Controllers\Admin\Auth\NewPasswordController;
-use App\Http\Controllers\Admin\Auth\VerifyEmailController;
-use App\Http\Controllers\Admin\Auth\RegisteredUserController;
-use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Admin\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Admin\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Admin\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Admin\Auth\NewPasswordController;
+use App\Http\Controllers\Admin\Auth\PasswordController;
+use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Admin\Auth\RegisteredUserController;
+use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\KycRequestController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserRoleController;
+use App\Http\Controllers\SettingController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest:admin')
-->prefix('admin')
-->as('admin.')
-->group(function () {
+    ->prefix('admin')
+    ->as('admin.')
+    ->group(function () {
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+        Route::get('login', [AuthenticatedSessionController::class, 'create'])
+            ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->name('password.request');
+        Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+            ->name('password.request');
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->name('password.email');
+        Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+            ->name('password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->name('password.reset');
+        Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+            ->name('password.reset');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.store');
-});
+        Route::post('reset-password', [NewPasswordController::class, 'store'])
+            ->name('password.store');
+    });
 
 Route::middleware('auth:admin')
-->prefix('admin')
-->as('admin.')
-->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-        ->name('verification.notice');
+    ->prefix('admin')
+    ->as('admin.')
+    ->group(function () {
+        Route::get('verify-email', EmailVerificationPromptController::class)
+            ->name('verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
+        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
-        ->name('verification.send');
+        Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->name('password.confirm');
+        Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+            ->name('password.confirm');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+        Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
 
-    /** Profile Routes */
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
+        /** Profile Routes */
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profile.update');
 
-    /**Kyc Request Routes */
-    Route::get('/kyc-requests', [KycRequestController::class, 'index'])->name('kyc.index');
-    Route::get('/kyc-requests/{Kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
-    Route::get('/kyc-requests/download/{Kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
-    Route::put('/kyc-requests/{Kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
+        /**Kyc Request Routes */
+        Route::get('/kyc-requests', [KycRequestController::class, 'index'])->name('kyc.index');
+        Route::get('/kyc-requests/{Kyc_request}', [KycRequestController::class, 'show'])->name('kyc.show');
+        Route::get('/kyc-requests/download/{Kyc_request}', [KycRequestController::class, 'download'])->name('kyc.download');
+        Route::put('/kyc-requests/{Kyc_request}/update', [KycRequestController::class, 'update'])->name('kyc.update');
 
-    /** Role Routes */
-    Route::resource('/roles', RoleController::class);
-    Route::resource('/user-role', UserRoleController::class);
-});
+        /** Role Routes */
+        Route::resource('/roles', RoleController::class);
+        Route::resource('/user-role', UserRoleController::class);
+
+        /** Settings Routes */
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::put('/settings/general-settings', [SettingController::class, 'generalSettings'])->name('settings.general');
+        Route::get('/commission-settings', [SettingController::class, 'commissionSettingsIndex'])->name('commission-settings.index');
+        Route::put('/commission-settings', [SettingController::class, 'commissionSettings'])->name('commission-settings.store');
+        Route::get('/site-settings', [SettingController::class, 'siteSettingsIndex'])->name('site-settings.index');
+        Route::put('/site-settings', [SettingController::class, 'siteSettings'])->name('site-settings.store');
+        Route::get('/logo-settings', [SettingController::class, 'logoSettingsIndex'])->name('logo-settings.index');
+        Route::put('/logo-settings', [SettingController::class, 'logoSettings'])->name('logo-settings.store');
+    });

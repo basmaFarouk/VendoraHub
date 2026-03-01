@@ -21,6 +21,7 @@
     <link href="./dist/css/tabler.css?1750026893" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/global/upload-preview/upload-preview.css') }}" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.34.0/dist/tabler-icons.min.css" />
     <link href="{{ asset('assets/admin/css/tabler.css') }}" rel="stylesheet" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN CUSTOM FONT -->
